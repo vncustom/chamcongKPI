@@ -1,0 +1,644 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nhật ký chấm công KPI</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --panel: #ffffff;
+      --text: #17202a;
+      --muted: #647184;
+      --line: #dfe5ee;
+      --primary: #0f766e;
+      --primary-dark: #115e59;
+      --focus: #f59e0b;
+      --danger: #b42318;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 15px;
+      line-height: 1.45;
+    }
+
+    button,
+    input,
+    textarea {
+      font: inherit;
+    }
+
+    .app {
+      width: min(1180px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 22px 0 34px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+
+    .status {
+      min-height: 38px;
+      padding: 9px 12px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--panel);
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .status.error {
+      color: var(--danger);
+      border-color: #f3b4ad;
+      background: #fff7f5;
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) 1fr auto auto;
+      gap: 10px;
+      align-items: end;
+      margin-bottom: 16px;
+    }
+
+    .field {
+      display: grid;
+      gap: 6px;
+    }
+
+    label {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--panel);
+      color: var(--text);
+      outline: none;
+    }
+
+    input {
+      height: 40px;
+      padding: 8px 10px;
+    }
+
+    textarea {
+      min-height: 40px;
+      resize: vertical;
+      padding: 10px;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: var(--focus);
+      box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.18);
+    }
+
+    .button {
+      height: 40px;
+      border: 0;
+      border-radius: 6px;
+      padding: 0 15px;
+      background: var(--primary);
+      color: #fff;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .button:hover {
+      background: var(--primary-dark);
+    }
+
+    .button.secondary {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--text);
+    }
+
+    .button.secondary:hover {
+      border-color: #b8c2d1;
+      background: #f9fafb;
+    }
+
+    .button:disabled {
+      cursor: wait;
+      opacity: 0.65;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .section {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+    }
+
+    .section h2 {
+      margin: 0 0 14px;
+      font-size: 17px;
+      letter-spacing: 0;
+    }
+
+    .section h2.inline-heading {
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+    }
+
+    .program-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .qty-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+      min-height: 58px;
+      padding: 8px 10px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fbfcfd;
+    }
+
+    .qty-row span {
+      min-width: 0;
+      overflow-wrap: anywhere;
+      font-weight: 600;
+    }
+
+    .stepper {
+      display: grid;
+      grid-template-columns: 44px 54px 44px;
+      gap: 4px;
+      align-items: center;
+    }
+
+    .stepper button {
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      color: var(--text);
+      cursor: pointer;
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .stepper button:active {
+      background: #e8f3f1;
+      border-color: var(--primary);
+    }
+
+    .qty-row input {
+      height: 44px;
+      text-align: center;
+      padding: 4px;
+      background: #fff;
+      font-size: 18px;
+      font-weight: 700;
+      -moz-appearance: textfield;
+    }
+
+    .qty-row input::-webkit-outer-spin-button,
+    .qty-row input::-webkit-inner-spin-button {
+      margin: 0;
+      -webkit-appearance: none;
+    }
+
+    .side {
+      display: grid;
+      gap: 16px;
+    }
+
+    .live-grid {
+      display: grid;
+      gap: 10px;
+    }
+
+    .report-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .report-grid .button {
+      grid-column: 1 / -1;
+    }
+
+    .footer-actions {
+      position: sticky;
+      bottom: 0;
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 16px;
+      padding: 12px 0 0;
+      background: linear-gradient(180deg, rgba(246, 247, 249, 0), var(--bg) 28%);
+    }
+
+    @media (max-width: 1120px) {
+      .controls,
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .program-grid {
+        grid-template-columns: 1fr !important;
+      }
+
+      .status {
+        white-space: normal;
+      }
+
+      .topbar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      body {
+        font-size: 16px;
+      }
+
+      .app {
+        width: 100%;
+        padding: 12px 10px 92px;
+      }
+
+      h1 {
+        font-size: 22px;
+      }
+
+      .section {
+        padding: 12px;
+        border-radius: 0;
+      }
+
+      .controls {
+        gap: 8px;
+      }
+
+      .controls .button {
+        width: 100%;
+      }
+
+      .qty-row {
+        grid-template-columns: 1fr;
+        gap: 8px;
+        padding: 10px;
+      }
+
+      .qty-row span {
+        font-size: 16px;
+      }
+
+      .stepper {
+        grid-template-columns: 56px minmax(82px, 1fr) 56px;
+      }
+
+      .stepper button,
+      .qty-row input {
+        height: 52px;
+      }
+
+      .stepper button {
+        width: 56px;
+        font-size: 28px;
+      }
+
+      .footer-actions {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 10px;
+        background: var(--panel);
+        border-top: 1px solid var(--line);
+      }
+
+      .footer-actions .button {
+        flex: 1;
+        height: 46px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <div class="topbar">
+      <h1>Nhật ký chấm công KPI</h1>
+      <div id="status" class="status">Đang tải...</div>
+    </div>
+
+    <section class="controls">
+      <div class="field">
+        <label for="workDate">Ngày</label>
+        <input id="workDate" type="date">
+      </div>
+      <div class="field">
+        <label for="note">Ghi chú</label>
+        <textarea id="note" rows="1"></textarea>
+      </div>
+      <button id="loadButton" class="button secondary" type="button">Tải ngày</button>
+      <button id="saveButton" class="button" type="button">Lưu nhật ký</button>
+    </section>
+
+    <div class="layout">
+      <section class="section">
+        <h2>Chương trình</h2>
+        <div id="programGrid" class="program-grid"></div>
+        <h2 class="inline-heading">Truyền hình trực tiếp</h2>
+        <div id="liveGrid" class="live-grid"></div>
+      </section>
+
+      <aside class="side">
+        <section class="section">
+          <h2>Thống kê tháng</h2>
+          <div class="report-grid">
+            <div class="field">
+              <label for="reportMonth">Tháng</label>
+              <input id="reportMonth" type="number" min="1" max="12">
+            </div>
+            <div class="field">
+              <label for="reportYear">Năm</label>
+              <input id="reportYear" type="number" min="2020" max="2100">
+            </div>
+            <button id="reportButton" class="button" type="button">Tạo thống kê</button>
+          </div>
+        </section>
+      </aside>
+    </div>
+
+    <div class="footer-actions">
+      <button id="clearButton" class="button secondary" type="button">Xóa số nhập</button>
+      <button id="saveButtonBottom" class="button" type="button">Lưu nhật ký</button>
+    </div>
+  </main>
+
+  <script>
+    const state = {
+      programs: [],
+      liveRoles: [],
+      busy: false,
+    };
+
+    const els = {
+      status: document.getElementById('status'),
+      workDate: document.getElementById('workDate'),
+      note: document.getElementById('note'),
+      programGrid: document.getElementById('programGrid'),
+      liveGrid: document.getElementById('liveGrid'),
+      loadButton: document.getElementById('loadButton'),
+      saveButton: document.getElementById('saveButton'),
+      saveButtonBottom: document.getElementById('saveButtonBottom'),
+      clearButton: document.getElementById('clearButton'),
+      reportButton: document.getElementById('reportButton'),
+      reportMonth: document.getElementById('reportMonth'),
+      reportYear: document.getElementById('reportYear'),
+    };
+
+    function setStatus(message, isError) {
+      els.status.textContent = message;
+      els.status.classList.toggle('error', Boolean(isError));
+    }
+
+    function setBusy(value) {
+      state.busy = value;
+      [
+        els.loadButton,
+        els.saveButton,
+        els.saveButtonBottom,
+        els.clearButton,
+        els.reportButton,
+      ].forEach((button) => {
+        button.disabled = value;
+      });
+      document.querySelectorAll('.stepper button, input[data-group]').forEach((control) => {
+        control.disabled = value;
+      });
+    }
+
+    function createQuantityRow(name, group) {
+      const row = document.createElement('div');
+      row.className = 'qty-row';
+
+      const text = document.createElement('span');
+      text.textContent = name;
+
+      const stepper = document.createElement('div');
+      stepper.className = 'stepper';
+
+      const minus = document.createElement('button');
+      minus.type = 'button';
+      minus.textContent = '−';
+      minus.setAttribute('aria-label', 'Giảm ' + name);
+
+      const input = document.createElement('input');
+      input.type = 'number';
+      input.min = '0';
+      input.step = '1';
+      input.inputMode = 'numeric';
+      input.value = '0';
+      input.dataset.group = group;
+      input.dataset.name = name;
+
+      const plus = document.createElement('button');
+      plus.type = 'button';
+      plus.textContent = '+';
+      plus.setAttribute('aria-label', 'Tăng ' + name);
+
+      minus.addEventListener('click', () => changeQuantity(input, -1));
+      plus.addEventListener('click', () => changeQuantity(input, 1));
+      input.addEventListener('change', () => normalizeInputValue(input));
+
+      stepper.append(minus, input, plus);
+      row.append(text, stepper);
+      return row;
+    }
+
+    function normalizeInputValue(input) {
+      const value = Math.max(0, Number.parseInt(input.value || '0', 10) || 0);
+      input.value = value;
+    }
+
+    function changeQuantity(input, delta) {
+      const current = Number.parseInt(input.value || '0', 10) || 0;
+      input.value = Math.max(0, current + delta);
+    }
+
+    function renderLists() {
+      els.programGrid.textContent = '';
+      els.liveGrid.textContent = '';
+
+      state.programs.forEach((name) => {
+        els.programGrid.appendChild(createQuantityRow(name, 'programs'));
+      });
+      state.liveRoles.forEach((name) => {
+        els.liveGrid.appendChild(createQuantityRow(name, 'live'));
+      });
+    }
+
+    function collectEntry() {
+      const entry = {
+        date: els.workDate.value,
+        programs: {},
+        live: {},
+        note: els.note.value,
+      };
+
+      document.querySelectorAll('input[data-group="programs"]').forEach((input) => {
+        entry.programs[input.dataset.name] = Number(input.value || 0);
+      });
+      document.querySelectorAll('input[data-group="live"]').forEach((input) => {
+        entry.live[input.dataset.name] = Number(input.value || 0);
+      });
+
+      return entry;
+    }
+
+    function fillEntry(entry) {
+      els.workDate.value = entry.date;
+      els.note.value = entry.note || '';
+
+      document.querySelectorAll('input[data-group="programs"]').forEach((input) => {
+        input.value = entry.programs && entry.programs[input.dataset.name] ? entry.programs[input.dataset.name] : 0;
+      });
+      document.querySelectorAll('input[data-group="live"]').forEach((input) => {
+        input.value = entry.live && entry.live[input.dataset.name] ? entry.live[input.dataset.name] : 0;
+      });
+    }
+
+    function clearNumbers() {
+      document.querySelectorAll('input[data-group]').forEach((input) => {
+        input.value = 0;
+      });
+      els.note.value = '';
+      setStatus('Đã xóa số trên màn hình');
+    }
+
+    function loadEntry() {
+      if (!els.workDate.value) {
+        setStatus('Chọn ngày trước khi tải', true);
+        return;
+      }
+
+      setBusy(true);
+      setStatus('Đang tải nhật ký...');
+      google.script.run
+        .withSuccessHandler((entry) => {
+          fillEntry(entry);
+          setBusy(false);
+          setStatus('Đã tải ngày ' + entry.date);
+        })
+        .withFailureHandler((error) => {
+          setBusy(false);
+          setStatus(error.message || String(error), true);
+        })
+        .getEntryForDate(els.workDate.value);
+    }
+
+    function saveEntry() {
+      if (!els.workDate.value) {
+        setStatus('Chọn ngày trước khi lưu', true);
+        return;
+      }
+
+      setBusy(true);
+      setStatus('Đang lưu nhật ký...');
+      google.script.run
+        .withSuccessHandler((result) => {
+          setBusy(false);
+          setStatus(result.message || 'Đã lưu');
+        })
+        .withFailureHandler((error) => {
+          setBusy(false);
+          setStatus(error.message || String(error), true);
+        })
+        .saveJournalEntry(collectEntry());
+    }
+
+    function createReport() {
+      setBusy(true);
+      setStatus('Đang tạo thống kê tháng...');
+      google.script.run
+        .withSuccessHandler((result) => {
+          setBusy(false);
+          setStatus('Đã tạo/cập nhật sheet ' + result.sheetName);
+        })
+        .withFailureHandler((error) => {
+          setBusy(false);
+          setStatus(error.message || String(error), true);
+        })
+        .createReportFromWeb(els.reportYear.value, els.reportMonth.value);
+    }
+
+    function initialize() {
+      setBusy(true);
+      google.script.run
+        .withSuccessHandler((data) => {
+          const today = new Date();
+          state.programs = data.programs;
+          state.liveRoles = data.liveRoles;
+          renderLists();
+          els.workDate.value = data.today;
+          els.reportMonth.value = today.getMonth() + 1;
+          els.reportYear.value = today.getFullYear();
+          setBusy(false);
+          loadEntry();
+        })
+        .withFailureHandler((error) => {
+          setBusy(false);
+          setStatus(error.message || String(error), true);
+        })
+        .getInitialData();
+    }
+
+    els.loadButton.addEventListener('click', loadEntry);
+    els.workDate.addEventListener('change', loadEntry);
+    els.saveButton.addEventListener('click', saveEntry);
+    els.saveButtonBottom.addEventListener('click', saveEntry);
+    els.clearButton.addEventListener('click', clearNumbers);
+    els.reportButton.addEventListener('click', createReport);
+
+    initialize();
+  </script>
+</body>
+</html>

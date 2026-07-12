@@ -359,6 +359,257 @@
         height: 46px;
       }
     }
+
+    /* Modal Styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s ease, visibility 0.25s ease;
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-content {
+      background: var(--panel);
+      width: min(720px, calc(100% - 24px));
+      max-height: 85vh;
+      border-radius: 12px;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      display: flex;
+      flex-direction: column;
+      transform: translateY(20px) scale(0.95);
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      border: 1px solid var(--line);
+    }
+
+    .modal-overlay.open .modal-content {
+      transform: translateY(0) scale(1);
+    }
+
+    .modal-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-header h3 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .modal-close {
+      background: none;
+      border: 0;
+      font-size: 24px;
+      color: var(--muted);
+      cursor: pointer;
+      line-height: 1;
+      padding: 4px 8px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-close:hover {
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .modal-body {
+      padding: 20px;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    /* Stats Dashboard widgets */
+    .stats-dashboard {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .stat-card {
+      background: #f8fafc;
+      border: 1px solid var(--line);
+      padding: 12px 16px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .stat-card-title {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .stat-card-value {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .stat-card-value.highlight {
+      color: #b45309; /* warm color for days */
+    }
+
+    .stat-card-value.info {
+      color: #0369a1; /* blue for programs */
+    }
+
+    .stat-detail-section {
+      margin-top: 10px;
+    }
+
+    .stat-detail-section h4 {
+      margin: 0 0 10px;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      border-bottom: 2px solid var(--primary);
+      padding-bottom: 4px;
+      display: inline-block;
+    }
+
+    /* Day list style */
+    .days-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .day-item {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .day-item-header {
+      background: #f8fafc;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .day-date {
+      font-weight: 700;
+      color: var(--text);
+      font-size: 14px;
+    }
+
+    .day-date-weekday {
+      font-weight: normal;
+      color: var(--muted);
+      font-size: 13px;
+      margin-left: 4px;
+    }
+
+    .day-badges {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      line-height: 1.2;
+    }
+
+    .badge-live-role {
+      background: #e6f4ea;
+      color: #137333;
+      border: 1px solid #ceead6;
+    }
+    
+    .badge-live-role.truong-ca {
+      background: #feefe3;
+      color: #b06000;
+      border: 1px solid #fad2cf;
+    }
+
+    .badge-cong {
+      background: #e8f0fe;
+      color: #1a73e8;
+      border: 1px solid #d2e3fc;
+    }
+
+    .day-item-body {
+      padding: 10px 14px;
+      font-size: 14px;
+    }
+
+    .day-programs {
+      margin: 0;
+      padding: 0 0 0 18px;
+      color: var(--text);
+    }
+
+    .day-programs li {
+      margin-bottom: 4px;
+    }
+
+    .day-programs li:last-child {
+      margin-bottom: 0;
+    }
+
+    .day-note {
+      margin-top: 6px;
+      padding-top: 6px;
+      border-top: 1px dashed var(--line);
+      color: var(--muted);
+      font-style: italic;
+      font-size: 13px;
+    }
+
+    .empty-state {
+      padding: 30px;
+      text-align: center;
+      color: var(--muted);
+      font-style: italic;
+      border: 1px dashed var(--line);
+      border-radius: 8px;
+      background: #fbfcfd;
+    }
+
+    @media (max-width: 600px) {
+      .stats-dashboard {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+      .modal-content {
+        max-height: 90vh;
+      }
+    }
   </style>
 </head>
 <body>
@@ -401,7 +652,8 @@
               <label for="reportYear">Năm</label>
               <input id="reportYear" type="number" min="2020" max="2100">
             </div>
-            <button id="reportButton" class="button" type="button">Tạo thống kê</button>
+            <button id="statsButton" class="button secondary" type="button" style="grid-column: 1 / -1; margin-bottom: 4px;">Xem thống kê</button>
+            <button id="reportButton" class="button" type="button" style="grid-column: 1 / -1;">Tạo sheet báo cáo</button>
           </div>
         </section>
       </aside>
@@ -412,6 +664,41 @@
       <button id="saveButtonBottom" class="button" type="button">Lưu nhật ký</button>
     </div>
   </main>
+
+  <!-- Modal Xem thống kê -->
+  <div id="statsModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="modalTitle">Thống kê tháng</h3>
+        <button id="closeModal" class="modal-close" type="button" aria-label="Đóng modal">&times;</button>
+      </div>
+      <div class="modal-body" id="modalBody">
+        <!-- Dashboard summary -->
+        <div class="stats-dashboard">
+          <div class="stat-card">
+            <div class="stat-card-title">Tổng công tích lũy</div>
+            <div class="stat-card-value" id="statTotalCong">0.0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-title">Số chương trình</div>
+            <div class="stat-card-value info" id="statTotalPrograms">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-title">Số ngày làm/trực</div>
+            <div class="stat-card-value highlight" id="statTotalDays">0</div>
+          </div>
+        </div>
+        
+        <!-- Detailed list -->
+        <div class="stat-detail-section">
+          <h4>Chi tiết các ngày làm việc</h4>
+          <div id="statsDaysList" class="days-list">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script>
     const state = {
@@ -433,6 +720,14 @@
       reportButton: document.getElementById('reportButton'),
       reportMonth: document.getElementById('reportMonth'),
       reportYear: document.getElementById('reportYear'),
+      statsButton: document.getElementById('statsButton'),
+      statsModal: document.getElementById('statsModal'),
+      closeModal: document.getElementById('closeModal'),
+      modalTitle: document.getElementById('modalTitle'),
+      statTotalCong: document.getElementById('statTotalCong'),
+      statTotalPrograms: document.getElementById('statTotalPrograms'),
+      statTotalDays: document.getElementById('statTotalDays'),
+      statsDaysList: document.getElementById('statsDaysList'),
     };
 
     function setStatus(message, isError) {
@@ -448,6 +743,7 @@
         els.saveButtonBottom,
         els.clearButton,
         els.reportButton,
+        els.statsButton,
       ].forEach((button) => {
         button.disabled = value;
       });
@@ -610,6 +906,135 @@
         .createReportFromWeb(els.reportYear.value, els.reportMonth.value);
     }
 
+    function closeStatsModal() {
+      els.statsModal.classList.remove('open');
+    }
+
+    function getDayOfWeekName(dateStr) {
+      const date = new Date(dateStr);
+      const days = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
+      return isNaN(date.getTime()) ? '' : days[date.getDay()];
+    }
+
+    function formatDateDM(dateStr) {
+      const parts = dateStr.split('-');
+      if (parts.length === 3) {
+        return parts[2] + '/' + parts[1];
+      }
+      return dateStr;
+    }
+
+    function showStatsModal() {
+      const year = els.reportYear.value;
+      const month = els.reportMonth.value;
+      
+      if (!month || !year) {
+        setStatus('Vui lòng chọn tháng và năm trước', true);
+        return;
+      }
+
+      setBusy(true);
+      setStatus('Đang tải thống kê...');
+      
+      google.script.run
+        .withSuccessHandler((res) => {
+          setBusy(false);
+          setStatus('Đã tải thống kê tháng ' + month + '/' + year);
+          renderStatsModal(res);
+        })
+        .withFailureHandler((error) => {
+          setBusy(false);
+          setStatus(error.message || String(error), true);
+        })
+        .getMonthlyStats(year, month);
+    }
+
+    function renderStatsModal(data) {
+      els.modalTitle.textContent = 'Thống kê tháng ' + data.month + '/' + data.year;
+      
+      els.statTotalCong.textContent = data.summary.totalCong.toFixed(2);
+      els.statTotalPrograms.textContent = data.summary.totalProgramsDone;
+      els.statTotalDays.textContent = data.summary.totalWorkingDays;
+      
+      els.statsDaysList.textContent = '';
+      
+      if (data.dailyEntries.length === 0) {
+        const empty = document.createElement('div');
+        empty.className = 'empty-state';
+        empty.textContent = 'Không có nhật ký công việc nào trong tháng này.';
+        els.statsDaysList.appendChild(empty);
+      } else {
+        data.dailyEntries.forEach((entry) => {
+          const item = document.createElement('div');
+          item.className = 'day-item';
+          
+          const header = document.createElement('div');
+          header.className = 'day-item-header';
+          
+          const dateDiv = document.createElement('div');
+          dateDiv.className = 'day-date';
+          dateDiv.textContent = formatDateDM(entry.date);
+          
+          const weekdaySpan = document.createElement('span');
+          weekdaySpan.className = 'day-date-weekday';
+          weekdaySpan.textContent = '(' + getDayOfWeekName(entry.date) + ')';
+          dateDiv.appendChild(weekdaySpan);
+          
+          const badgesDiv = document.createElement('div');
+          badgesDiv.className = 'day-badges';
+          
+          entry.live.forEach((role) => {
+            const isTruongCa = role.name.toLowerCase().indexOf('trưởng ca') >= 0;
+            const badge = document.createElement('span');
+            badge.className = 'badge badge-live-role' + (isTruongCa ? ' truong-ca' : '');
+            badge.textContent = 'Trực THTT: ' + role.name + (role.qty > 1 ? ' (x' + role.qty + ')' : '');
+            badgesDiv.appendChild(badge);
+          });
+          
+          const congBadge = document.createElement('span');
+          congBadge.className = 'badge badge-cong';
+          congBadge.textContent = entry.totalCong.toFixed(2) + ' công';
+          badgesDiv.appendChild(congBadge);
+          
+          header.appendChild(dateDiv);
+          header.appendChild(badgesDiv);
+          item.appendChild(header);
+          
+          const body = document.createElement('div');
+          body.className = 'day-item-body';
+          
+          if (entry.programs.length > 0) {
+            const list = document.createElement('ul');
+            list.className = 'day-programs';
+            entry.programs.forEach((prog) => {
+              const li = document.createElement('li');
+              li.textContent = prog.name + ': ' + prog.qty + ' chương trình (' + (prog.qty * prog.coeff).toFixed(2) + ' công)';
+              list.appendChild(li);
+            });
+            body.appendChild(list);
+          } else if (entry.live.length > 0 && entry.programs.length === 0) {
+            const noProgMsg = document.createElement('div');
+            noProgMsg.style.color = 'var(--muted)';
+            noProgMsg.style.fontSize = '13px';
+            noProgMsg.textContent = 'Không có chương trình (chỉ trực THTT).';
+            body.appendChild(noProgMsg);
+          }
+          
+          if (entry.note) {
+            const noteDiv = document.createElement('div');
+            noteDiv.className = 'day-note';
+            noteDiv.textContent = 'Ghi chú: ' + entry.note;
+            body.appendChild(noteDiv);
+          }
+          
+          item.appendChild(body);
+          els.statsDaysList.appendChild(item);
+        });
+      }
+      
+      els.statsModal.classList.add('open');
+    }
+
     function initialize() {
       setBusy(true);
       google.script.run
@@ -637,6 +1062,16 @@
     els.saveButtonBottom.addEventListener('click', saveEntry);
     els.clearButton.addEventListener('click', clearNumbers);
     els.reportButton.addEventListener('click', createReport);
+    els.statsButton.addEventListener('click', showStatsModal);
+    els.closeModal.addEventListener('click', closeStatsModal);
+    els.statsModal.addEventListener('click', (e) => {
+      if (e.target === els.statsModal) closeStatsModal();
+    });
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && els.statsModal.classList.contains('open')) {
+        closeStatsModal();
+      }
+    });
 
     initialize();
   </script>

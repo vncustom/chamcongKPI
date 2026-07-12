@@ -1,0 +1,97 @@
+Sheet names: ['t4-2026']
+
+--- Sheet: t4-2026 (68 rows, 13 cols) ---
+A1: ĐÀI PHÁT THANH TRUYỀN HÌNH
+A2:        THÀNH PHỐ HỒ CHÍ MINH  
+A3: TRUNG TÂM PHÁT HÌNH-TƯ LIỆU
+A5: THỐNG KÊ CÔNG VIỆC KỸ THUẬT THÁNG 4 - 2026
+A7: I | B7: BỘ PHẬN THAM GIA SẢN XUẤT
+A9: STT | B9: Thể loại
+(Theo thể loại đơn vị nội dung xác định) | C9: Tên chương trình | D9: Số lượng 
+CT | E9: Thời lượng CT (phút) | F9: Vị trí việc làm | G9: Số người thực hiện | H9: Số công /người
+(Số giờ/8) | I9: Tổng số công | J9: Ghi chú | K9: Số công NV/tháng | L9: Số công TP/tháng
+A10: 1 | B10: CT Thời sự tổng hợp phát Trực tiếp | C10: Bản tin buổi sáng | D10: 8 | E10: 30 | F10: Ekip thực hiện chương trình 
+D11: 8 | F11: Trực bản tin | G11: 1 | H11: 0.18 | I11: =H11*G11 | J11: ca viên | K11: =I11*D11
+A12: 2 | B12: CT Thời sự tổng hợp phát Trực tiếp | C12: Bản tin 11g30 | D12: 8 | E12: 30 | F12: Ekip thực hiện chương trình  | I12: =H12*G12 | K12: =I12*D12
+D13: 8 | F13: Trực bản tin | G13: 1 | H13: 0.15 | I13: =H13*G13 | J13: ca viên | K13: =I13*D13
+A14: 3 | B14: CT Thời sự tổng hợp phát Trực tiếp | C14: Bản tin 20h | D14: 12 | E14: 30 | F14: Ekip thực hiện chương trình  | I14: =H14*G14 | K14: =I14*D14
+D15: 12 | F15: Trực bản tin | G15: 1 | H15: 0.25 | I15: =H15*G15 | J15: ca viên | K15: =I15*D15
+A16: 4 | B16: Bản tin truyền hình chuyên đề | C16: Góc nhìn HTV | D16: 1 | E16: 20 | F16: Ekip thực hiện chương trình  | I16: =H16*G16 | K16: =I16*D16
+D17: 1 | F17: Trực phim trường | G17: 1 | H17: 0.07 | I17: =H17*G17 | J17: ca viên | K17: =I17*D17
+A18: 5 | B18: Giao lưu trường quay ghi hình phát sau | C18: Dự báo kinh tế | D18: 1 | E18: 20-45 | F18: Ekip thực hiện chương trình  | I18: =H18*G18 | K18: =I18*D18
+D19: 1 | F19: Trực phim trường | G19: 1 | H19: 0.1 | I19: =H19*G19 | J19: ca viên | K19: =I19*D19
+A20: 6 | B20: CT Thời sự tổng hợp phát trực tiếp | C20: 60 giây sáng | D20: 8 | E20: 30 | F20: Ekip thực hiện chương trình  | I20: =H20*G20 | K20: =I20*D20
+D21: 8 | F21: Trực bản tin | G21: 1 | H21: 0.2 | I21: =H21*G21 | J21: ca viên | K21: =I21*D21
+A22: 7 | B22: CT Thời sự tổng hợp phát trực tiếp | C22: 60 giây trưa | D22: 8 | E22: 30 | F22: Ekip thực hiện chương trình  | I22: =H22*G22 | K22: =I22*D22
+D23: 8 | F23: Trực bản tin | G23: 1 | H23: 0.2 | I23: =H23*G23 | J23: ca viên | K23: =I23*D23
+A24: 8 | B24: CT Thời sự tổng hợp phát trực tiếp | C24: 60 giây chiều | D24: 12 | E24: 30 | F24: Ekip thực hiện chương trình  | I24: =H24*G24 | K24: =I24*D24
+D25: 12 | F25: Trực bản tin | G25: 1 | H25: 0.2 | I25: =H25*G25 | J25: ca viên | K25: =I25*D25
+A26: 9 | B26: CT Thời sự tổng hợp phát trực tiếp | C26: Thế giới 24h | D26: 12 | E26: 12 | F26: Ekip thực hiện chương trình  | I26: =H26*G26 | K26: =I26*D26
+D27: 12 | F27: Trực bản tin | G27: 1 | H27: 0.12 | I27: =H27*G27 | J27: ca viên | K27: =I27*D27
+A28: 10 | B28: Bản tin truyền hình ngắn | C28: Thế giới 24/7 | D28: 1 | E28: 6 | F28: Ekip thực hiện chương trình  | I28: =H28*G28 | K28: =I28*D28
+D29: 1 | F29: Trực phim trường | G29: 1 | H29: 0.04 | I29: =G29*H29 | J29: ca viên | K29: =I29*D29
+A30: 11 | B30: Bản tin truyền hình ngắn | C30: Nhìn ra thế giới | D30: 5 | E30: 7 | F30: Ekip thực hiện chương trình  | K30: =I30*D30
+D31: 5 | F31: Trực phim trường | G31: 1 | H31: 0.04 | I31: =G31*H31 | J31: ca viên | K31: =I31*D31
+A32: 12 | B32: Bản tin truyền hình ngắn | C32: Thời tiết du ký | D32: 10 | E32: 3 | F32: Ekip thực hiện chương trình  | K32: =I32*D32
+D33: 10 | F33: Trực phim trường | G33: 1 | H33: 0.02 | I33: =G33*H33 | J33: ca viên | K33: =I33*D33
+A34: 13 | B34: Bản tin truyền hình ngắn | C34: Ăn sạch sống khỏe (chủ nhật nghỉ) | D34: 12 | E34: 5 | F34: Ekip thực hiện chương trình  | K34: =I34*D34
+D35: 12 | F35: Trực phim trường | G35: 1 | H35: 0.03 | I35: =G35*H35 | J35: ca viên | K35: =I35*D35
+A36: 14 | B36: Bản tin chuyên đề + Phóng sự tài liệu biên dịch | C36: Tổng kết các sự kiện thế giới | D36: 0 | E36: 60 | F36: Ekip thực hiện chương trình  | I36: =SUBTOTAL(9,I37:I37) | K36: =I36*D36
+D37: 0 | F37: Trực phim trường | G37: 0 | H37: 0.5 | I37: =G37*H37 | J37: ca viên | K37: =I37*D37
+A38: 15 | B38: BẢN TIN TRUYỀN HÌNH TRONG NƯỚC PHÁT TRỰC TIẾP | C38: Thể thao 365 | D38: 12 | E38: 10 | F38: Ekip thực hiện chương trình  | K38: =I38*D38
+D39: 12 | F39: Trực bản tin | G39: 1 | H39: 0.13 | I39: =G39*H39 | J39: ca viên | K39: =I39*D39
+A40: 16 | B40: Bản tin truyền hình chuyên đề | C40: Vươn khơi | D40: 8 | E40: 30 | F40: Ekip thực hiện chương trình  | I40: =H40*G40 | K40: =I40*D40
+D41: 8 | F41: Trực phim trường | G41: 1 | H41: 0.09 | I41: =H41*G41 | J41: ca viên | K41: =I41*D41
+A42: 17 | B42: PHÁT THANH TRỰC TIẾP | C42: Sàn diễn đời và nghề | D42: 0 | E42: 60 | F42: Ekip thực hiện chương trình  | K42: =I42*D42
+D43: 0 | F43: Trực bản tin | G43: 1 | H43: 0.22 | I43: =G43*H43 | J43: ca viên | K43: =I43*D43
+A44: 18 | B44: PHÁT THANH THU OFF | C44: Luật sư | D44: 0 | E44: 30 | F44: Ekip thực hiện chương trình  | K44: =I44*D44
+D45: 0 | F45: Trực bản tin | G45: 1 | H45: 0.15 | I45: =G45*H45 | J45: ca viên | K45: =I45*D45
+A46: 19 | B46: PHÁT THANH TRỰC TIẾP | C46: Bạn hữu đường xa | D46: 0 | E46: 60 | F46: Ekip thực hiện chương trình  | K46: =I46*D46
+D47: 0 | F47: Trực bản tin | G47: 1 | H47: 0.22 | I47: =G47*H47 | J47: ca viên | K47: =I47*D47
+J48: TỔNG CÔNG I | K48: =SUM(K11:K47)
+A49: II | B49:  CÔNG TÁC KHÁC
+A50: STT | B50: Đầu mục công việc | C50: Mô tả | D50: Tên sản phẩm đầu ra | E50: SL sp
+/tháng
+/người | F50: Thời gian thực hiện/sp/người | G50: Số người thực hiện | H50: Số công /người
+(Số giờ thực hiện : 8) | I50: Tổng số công | J50: GHI CHÚ | K50: NHÂN VIÊN GHI CHÚ
+A51: 1 | B51: Trực phim trường | C51: + giám sát phim trường: giám sát khi có người ngoài, vệ sinh thiết bị, giữ phim trường ngăn nắp gọn gàng
++ Hỗ trợ ca trực các công việc đơn giản
++ Kiểm tra tay nghề định kỳ đạt kết quả tốt
++ đảm bảo an toàn phát sóng các bản tin, các chương trình trực tiếp. Thực tập thường xuyên phương án xử lý sự cố
++ báo cáo các tình huống phát sinh ngay khi phát hiện, ngay sau mỗi chương trình trực tiếp | D51: Trực phim trường | E51: 20 | F51: 4.41 | G51: 1 | H51: =F51/8 | I51: =H51*G51*E51 | J51: KTV
+A52: 2 | B52: Tăng cường - Hoàn thành xuất sắc | C52: - Tăng cường ngoài ca
+- Có nghiên cứu mới
+- Hoàn thành xuất sắc nhiệm vụ | D52: Tăng cường - Hoàn thành xuất sắc | E52: 0 | F52: 4 | G52: 1 | H52: =F52/8 | I52: =H52*G52*E52 | J52: Toàn bộ
+A53: 3.1 | B53: Truyền hình trực tiếp | C53: Trưởng ca | D53: Trưởng ca - THTT | E53: 0 | F53: 2.4 | G53: 1 | H53: =F53/8 | I53: =H53*G53*E53 | J53: Live Thể thao, pháo hoa, cầu th,.. Các Live đột xuất
+A54: 3.2 | C54: Ca viên | D54: Ca viên - THTT | E54: 0 | F54: 2 | G54: 1 | H54: =F54/8 | I54: =H54*G54*E54
+A55: 3.3 | C55: Tăng cường | D55: Tăng cường - THTT | E55: 0 | F55: 2 | G55: 1 | H55: =F55/8 | I55: =H55*G55*E55
+A56: 4 | B56: Trực kỹ thuật toàn trung tâm | C56: + Sửa chữa cơ bản thiết bị máy móc, cài đặt máy
++ Cập nhật virus, kiểm policy, quét virus định kỳ
++ Bảo trì, sửa chữa thiết bị, máy tính các phim trường
++ Kiểm etere
++ Đấu nối hệ thống theo yêu cầu | D56: Kỹ thuật cơ bản | E56: 20 | F56: 1.23 | G56: 1 | H56: =F56/8 | I56: =H56*G56*E56 | J56: KS
+A57: 5 | B57: Trực kỹ thuật chuyên sâu | C57: - Đọc tài liệu, tìm hiểu hệ thống, thiết bị. 
+- Tìm hiểu công nghệ mới, đề xuất các giải pháp mới
+- Nghiên cứu các vấn đề Trưởng phòng và BGĐ giao
+- Vẽ/ cập nhật sơ đồ | D57: Kỹ sư chính | E57: 20 | F57: 1.23 | G57: 1 | H57: =F57/8 | I57: =H57*G57*E57 | J57: Kỹ sư chính
+A58: 6 | B58: Trưởng ca | C58: o Kiểm tra quân số: Kiểm tra, đảm bảo ca viên có mặt đủ. 
+o Nhận thông tin từ Trưởng ca trước về tình trạng máy móc, các sự cố còn tồn đọng và các lưu ý đặc biệt. Phân công ca viên giải quyết, kiểm tra và báo cáo tình hình xử lý.
+o Khi có sự cố gấp, Trưởng ca là người đứng ra xử lý, chịu trách nhiệm chính. Nếu kịp thời gian thì báo cáo Giám đốc, Trưởng phòng xin ý kiến chỉ đạo trước khi giải quyết.
+ | D58: Trưởng ca | E58: 20 | F58: 1.24 | G58: 1 | H58: =F58/8 | I58: =H58*G58*E58 | J58: Trưởng ca
+A59: 7.1 | B59: Phó Trưởng phòng | C59: + Hỗ trợ Trưởng phòng quản lý phòng, lên kế hoạch, dự trù mua sắm/sửa chữa thiết bị
++ Kiểm tra, giám sát, báo cáo kịp thời việc thực hiện nhiệm vụ của nhân viên 
++ Nghiên cứu, đề xuất giải pháp các vấn đề Trưởng phòng giao
++ Họp BPT hàng tuần | D59: Phó Trưởng phòng | E59: 15 | F59: 1.15 | G59: 1 | H59: =F59/8 | I59: =H59*G59*E59 | J59: Phó Trưởng phòng có kiêm Trưởng ca
+A60: 7.2 | C60: Hỗ trợ tốt Trưởng phòng trong việc triển khai kế hoạch | E60: 1 | F60: 16 | G60: 1 | H60: =F60/8 | I60: =H60*G60*E60
+A61: 7.3 | C61: Giám sát, đôn đốc nhân viên thực hiện tốt nhiệm vụ | E61: 1 | F61: 16 | G61: 1 | H61: =F61/8 | I61: =H61*G61*E61
+A62: 8.1 | B62: Trưởng phòng | C62: + Tiếp nhận các ycct
++ Triển khai và phân công công việc hàng ngày
++ Kiểm tra, giám sát việc thực hiện nhiệm vụ của nhân viên 
++ Họp và triển khai các chương trình với Các đơn vị liên quan
++ Chấm công KPI, chấm công ngày làm
++ Lên kế hoạch, dự trù mua sắm, tham mưu các vấn đề kỹ thuật cho BGĐ, thực hiện các thủ tục giấy tờ liên quan đến công việc 
++ Họp BPT hàng tuần và họp triển khai công việc với BGĐ | D62: Trưởng phòng | E62: 22 | F62: 10.56 | G62: 0 | H62: =F62/8 | I62: =H62*G62*E62 | J62: Trưởng phòng
+A63: 8.2 | C63: Hoàn thiện quy trình, nghiên cứu phát triển | E63: 1 | F63: 16 | G63: 0 | H63: =F63/8 | I63: =H63*G63*E63
+A64: 8.3 | C64: Kiểm tra tay nghề, kiểm tra thực hiện qui trình | E64: 1 | F64: 16 | G64: 0 | H64: =F64/8 | I64: =H64*G64*E64
+G66: TỔNG CÔNG II | I66: =SUM(I51:I64)
+C68: TỔNG CÔNG I+II | D68: =I66+K48

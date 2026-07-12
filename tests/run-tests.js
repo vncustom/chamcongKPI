@@ -241,3 +241,156 @@ test('reportLayoutKey_ distinguishes full template from compact generated sheet'
     '2:3': 'Bản tin buổi sáng',
   })), 'compact');
 });
+
+test('getCoefficients_ correctly parses coefficients from mocked sheet', () => {
+  const { getCoefficients_ } = sandbox.module.exports;
+  const lastRow = 60;
+  
+  const colCValues = new Array(lastRow).fill('');
+  colCValues[9] = 'Bản tin buổi sáng'; 
+  colCValues[11] = 'Bản tin 11g30';    
+  
+  const rowValues = [];
+  for (let i = 0; i < lastRow; i++) {
+    rowValues.push(['', '', '']);
+  }
+  rowValues[50] = ['', 'Truyền hình trực tiếp', ''];
+  rowValues[52] = ['', '', 'Trưởng ca'];
+  rowValues[53] = ['', '', 'Ca viên'];
+  
+  const mockSheet = {
+    getLastRow() {
+      return lastRow;
+    },
+    getRange(row, col, numRows, numCols) {
+      if (col === 3 && numCols === 1) {
+        const slice = colCValues.slice(row - 1, row - 1 + numRows).map(v => [v]);
+        return {
+          getValues() { return slice; }
+        };
+      }
+      if (col === 1 && numCols === 3) {
+        const slice = rowValues.slice(row - 1, row - 1 + numRows);
+        return {
+          getValues() { return slice; }
+        };
+      }
+      return {
+        getValue() {
+          if (row === 11 && col === 8) return 0.18; 
+          if (row === 13 && col === 8) return 0.15; 
+          if (row === 53 && col === 8) return 0.3;  
+          if (row === 54 && col === 8) return 0.25; 
+          return 0;
+        }
+      };
+    }
+  };
+
+  const coeffs = getCoefficients_(mockSheet);
+  
+  assert.strictEqual(coeffs.programs['Bản tin buổi sáng'], 0.18);
+  assert.strictEqual(coeffs.programs['Bản tin 11g30'], 0.15);
+  assert.strictEqual(coeffs.live['Trưởng ca'], 0.3);
+  assert.strictEqual(coeffs.live['Ca viên'], 0.25);
+});
+
+test('getMonthlyStats aggregates monthly work log records and computes sums', () => {
+  const mockSheet = {
+    getLastRow() { return 5; },
+    setFrozenRows() {},
+    clear() {},
+    getRange(row, col, numRows, numCols) {
+      if (row === 1 && numRows === 1) {
+        return {
+          getValues() { return [['', '', '', '', '', '', '', '']]; },
+          getValue() { return ''; },
+          setValue() {},
+          setValues() {}
+        };
+      }
+      if (row === 2 && numRows === 1) {
+        return {
+          getValues() {
+            return [['Ngày tháng năm', 'Bản tin buổi sáng', 'Bản tin 11g30', 'Truyền hình trực tiếp', '', '', 'Ghi chú', 'Cập nhật lúc']];
+          },
+          getValue() { return 'Ngày tháng năm'; },
+          setValue() {},
+          setValues() {}
+        };
+      }
+      if (row === 3 && numRows === 1) {
+        return {
+          getValues() {
+            return [['', '', '', 'Trưởng ca', 'Ca viên', 'Tăng cường', '', '']];
+          },
+          getValue() { return ''; },
+          setValue() {},
+          setValues() {}
+        };
+      }
+      if (row === 4 && numRows === 2) {
+        return {
+          getValues() {
+            return [
+              ['2026-07-01', 1, 0, 1, 0, 0, 'Ca trực sáng', ''],
+              ['2026-07-02', 0, 2, 0, 1, 0, 'Ca trực chiều', '']
+            ];
+          },
+          getValue() { return ''; },
+          setValue() {},
+          setValues() {}
+        };
+      }
+      return {
+        getValue() { return ''; },
+        setValue() {},
+        setValues() {}
+      };
+    }
+  };
+
+  const mockSpreadsheet = {
+    getSheetByName(name) {
+      if (name === 't4-2026') return null; // Force using fallback coefficients
+      return mockSheet;
+    }
+  };
+
+  sandbox.SpreadsheetApp = {
+    openById() {
+      return mockSpreadsheet;
+    }
+  };
+
+  // Re-run source execution in VM so SpreadsheetApp mock is bound before function call
+  const fs = require('fs');
+  const path = require('path');
+  const vm = require('vm');
+  const codePath = path.join(__dirname, '..', 'Code.gs');
+  const source = fs.readFileSync(codePath, 'utf8');
+  const testSandbox = { console, module: { exports: {} }, exports: {}, SpreadsheetApp: sandbox.SpreadsheetApp };
+  vm.runInNewContext(source, testSandbox, { filename: codePath });
+
+  const { getMonthlyStats } = testSandbox.module.exports;
+  const stats = getMonthlyStats(2026, 7);
+
+  assert.strictEqual(stats.year, 2026);
+  assert.strictEqual(stats.month, 7);
+  assert.strictEqual(stats.dailyEntries.length, 2); 
+  
+  assert.strictEqual(stats.dailyEntries[0].date, '2026-07-01');
+  assert.strictEqual(stats.dailyEntries[0].totalCong, 0.48); // 0.18 (morning) + 0.3 (Trưởng ca)
+  assert.strictEqual(stats.dailyEntries[0].programs[0].name, 'Bản tin buổi sáng');
+  assert.strictEqual(stats.dailyEntries[0].live[0].name, 'Trưởng ca');
+  assert.strictEqual(stats.dailyEntries[0].note, 'Ca trực sáng');
+
+  assert.strictEqual(stats.dailyEntries[1].date, '2026-07-02');
+  assert.strictEqual(stats.dailyEntries[1].totalCong, 0.55); // 0.15*2 (11g30) + 0.25 (Ca viên)
+  assert.strictEqual(stats.dailyEntries[1].note, 'Ca trực chiều');
+
+  assert.strictEqual(stats.summary.totalProgramsDone, 3);
+  assert.strictEqual(stats.summary.totalProgramCong, 0.48);
+  assert.strictEqual(stats.summary.totalLiveCong, 0.55);
+  assert.strictEqual(stats.summary.totalCong, 1.03);
+});

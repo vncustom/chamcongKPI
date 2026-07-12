@@ -640,6 +640,159 @@ function normalizeText_(value) {
     .replace(/\s+/g, ' ');
 }
 
+var FALLBACK_COEFFICIENTS = {
+  programs: {
+    'Bản tin buổi sáng': 0.18,
+    'Bản tin 11g30': 0.15,
+    'Bản tin 20h': 0.25,
+    'Góc nhìn HTV': 0.07,
+    'Dự báo kinh tế': 0.1,
+    '60 giây sáng': 0.2,
+    '60 giây trưa': 0.2,
+    '60 giây chiều': 0.2,
+    'Thế giới 24h': 0.12,
+    'Thế giới 24/7': 0.04,
+    'Nhìn ra thế giới': 0.04,
+    'Thời tiết du ký': 0.02,
+    'Ăn sạch sống khỏe': 0.03,
+    'Tổng kết các sự kiện thế giới': 0.5,
+    'Thể thao 365': 0.13,
+    'Vươn khơi': 0.09,
+    'Sàn diễn đời và nghề': 0.22,
+    'Luật sư': 0.15,
+    'Bạn hữu đường xa': 0.22
+  },
+  live: {
+    'Trưởng ca': 0.3,
+    'Ca viên': 0.25,
+    'Tăng cường': 0.25
+  }
+};
+
+function getCoefficients_(sheet) {
+  var programRows = findReportProgramRows_(sheet);
+  var liveCells = findReportLiveCells_(sheet);
+  
+  var coefficients = {
+    programs: {},
+    live: {}
+  };
+  
+  PROGRAMS.forEach(function(program) {
+    var rows = programRows[program.name] || program.rows;
+    if (rows && rows.length > 1) {
+      var coeffRow = rows[1];
+      coefficients.programs[program.name] = parseQuantity_(sheet.getRange(coeffRow, 8).getValue());
+    } else {
+      coefficients.programs[program.name] = 0;
+    }
+  });
+  
+  LIVE_ROLES.forEach(function(role) {
+    var cell = liveCells[role.name] || role.cell;
+    var rowNumber = Number(cell.replace(/[A-Z]/gi, ''));
+    coefficients.live[role.name] = parseQuantity_(sheet.getRange(rowNumber, 8).getValue());
+  });
+  
+  return coefficients;
+}
+
+function getMonthlyStats(year, month) {
+  var spreadsheet = getSpreadsheet_();
+  var journalSheet = ensureJournalSheet_();
+  var headers = getJournalHeaders_(journalSheet);
+  var rows = getJournalDataRows_(journalSheet, headers.length);
+  
+  var monthDate = new Date(Number(year), Number(month) - 1, 1);
+  
+  var coefficients = FALLBACK_COEFFICIENTS;
+  try {
+    var templateSheet = spreadsheet.getSheetByName(CONFIG.templateSheetName);
+    if (templateSheet) {
+      var extracted = getCoefficients_(templateSheet);
+      if (extracted && Object.keys(extracted.programs).length > 0) {
+        coefficients = extracted;
+      }
+    }
+  } catch (e) {
+    // If it fails to load template, fall back silently
+  }
+  
+  var dailyEntries = [];
+  var totalProgramsDone = 0;
+  var totalProgramCong = 0;
+  var totalLiveCong = 0;
+  
+  rows.forEach(function(row) {
+    if (!isSameMonth_(row[0], monthDate)) {
+      return;
+    }
+    
+    var entry = journalRowToEntry_(headers, row);
+    
+    var programsLogged = [];
+    var liveRolesLogged = [];
+    var programCountForDay = 0;
+    var liveCountForDay = 0;
+    
+    var entryProgramCong = 0;
+    var entryLiveCong = 0;
+    
+    Object.keys(entry.programs).forEach(function(name) {
+      var qty = entry.programs[name];
+      if (qty > 0) {
+        programCountForDay += qty;
+        var coeff = coefficients.programs[name] || 0;
+        entryProgramCong += qty * coeff;
+        programsLogged.push({ name: name, qty: qty, coeff: coeff });
+      }
+    });
+    
+    Object.keys(entry.live).forEach(function(name) {
+      var qty = entry.live[name];
+      if (qty > 0) {
+        liveCountForDay += qty;
+        var coeff = coefficients.live[name] || 0;
+        entryLiveCong += qty * coeff;
+        liveRolesLogged.push({ name: name, qty: qty, coeff: coeff });
+      }
+    });
+    
+    if (programCountForDay > 0 || liveCountForDay > 0 || entry.note) {
+      dailyEntries.push({
+        date: entry.date,
+        programs: programsLogged,
+        live: liveRolesLogged,
+        note: entry.note || '',
+        programCong: entryProgramCong,
+        liveCong: entryLiveCong,
+        totalCong: entryProgramCong + entryLiveCong
+      });
+      
+      totalProgramsDone += programCountForDay;
+      totalProgramCong += entryProgramCong;
+      totalLiveCong += entryLiveCong;
+    }
+  });
+  
+  dailyEntries.sort(function(a, b) {
+    return a.date.localeCompare(b.date);
+  });
+  
+  return {
+    year: Number(year),
+    month: Number(month),
+    dailyEntries: dailyEntries,
+    summary: {
+      totalProgramsDone: totalProgramsDone,
+      totalProgramCong: Number(totalProgramCong.toFixed(4)),
+      totalLiveCong: Number(totalLiveCong.toFixed(4)),
+      totalCong: Number((totalProgramCong + totalLiveCong).toFixed(4)),
+      totalWorkingDays: dailyEntries.length
+    }
+  };
+}
+
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
     buildJournalHeaders_: buildJournalHeaders_,
@@ -650,5 +803,8 @@ if (typeof module !== 'undefined' && module.exports) {
     reportLayoutKey_: reportLayoutKey_,
     normalizeText_: normalizeText_,
     getDisplayProgramNames_: getDisplayProgramNames_,
+    getCoefficients_: getCoefficients_,
+    getMonthlyStats: getMonthlyStats,
+    FALLBACK_COEFFICIENTS: FALLBACK_COEFFICIENTS
   };
 }
